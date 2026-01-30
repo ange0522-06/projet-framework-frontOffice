@@ -3,6 +3,7 @@ backend/target/
 backend/.mvn/
 backend/mvnw
 backend/mvnw.cmd
+backend/src/main/resources/application-*.properties
 
 # Frontend (Node/Vue)
 frontend/node_modules/
