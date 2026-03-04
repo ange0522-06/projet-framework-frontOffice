@@ -1,0 +1,14 @@
+dev1: Ange (Back office)
+dev2: Tina (Front Office)
+1-faire un CRUD de vehicule (id |reference |  nb_place | TypeCarburant(D,Es,H,EI))
+2- proteger l'appel de l'api :
+-creer l’api pour avoir la liste de reservation
+-creer la table token_expiration (id, token :=>varchar, expiration =>dateheure)
+FO :
+-stocker token dans un fichier de configuration
+BO :
+-créer une fonction (fonctionnalite)  pour voir si’il a  le token dans le header
+	S’’il existe, on regarde si elle est expiree ou pas :
+		Si expiree , pas d’acces a l’API
+		Si elle n’est pas expiree, elle a acces a l’API.
+	S’il n’existe pas, il n’a pas d’acces a l’api
