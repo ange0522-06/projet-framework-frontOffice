@@ -12,3 +12,33 @@ BO :
 		Si expiree , pas d’acces a l’API
 		Si elle n’est pas expiree, elle a acces a l’API.
 	S’il n’existe pas, il n’a pas d’acces a l’api
+__________________________________________________________
+README FOR TESTING:
+demarrer tomcat
+---> ouvrir back: D:\STUDY\S5\MNaina\TRINOME\new-clone\projet-framework-backOffice
+>>java -Ddb.url="jdbc:postgresql://localhost:5432/reservation_voiture?currentSchema=dev" -Ddb.user="postgres" -Ddb.password="postgres" -cp build/WEB-INF/classes;build/WEB-INF/lib/* com.cousin.Main generate 24                                   
+
+>>cd ../..
+
+>>cd projet-framework-frontOffice 
+
+>>curl -H "Authorization: Bearer c8445d27-db30-4815-ba21-0f65cc2041ce" http://localhost:8081/reservation/api/reservation/list
+									^^^^^^^^^^^^^
+									token generee
+<!-- copier de ce token dans application.properties
+here  -->
+external.api.reservations.token=c8445d27-db30-4815-ba21-0f65cc2041ce
+
+FO: deploy.bat
+BO: mvn spring-boot:run
+
+<!-- lien dans browser: -->
+<!-- reservation -->
+http://localhost:8081/reservation/reservation/form
+<!-- vehicule -->
+http://localhost:8081/reservation/vehicule/form
+
+
+<!-- selon le port de spring-boot : -->
+http://localhost:8085/front/reservations
+
