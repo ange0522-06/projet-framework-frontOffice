@@ -17,10 +17,34 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.sql.*;
+import java.time.LocalDateTime;
 
 @Controller
 @RequestMapping("/front")
 public class ReservationFrontController {
+
+    // Récupère la date d'expiration du token depuis la base PostgreSQL
+    private LocalDateTime getTokenExpirationFromDb(String token) {
+        String url = "jdbc:postgresql://localhost:5432/reservation_voiture";
+        String user = "postgres";
+        String password = "postgres";
+        String sql = "SELECT expiration FROM dev.token_expiration WHERE token = ?";
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, token);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Timestamp ts = rs.getTimestamp("expiration");
+                if (ts != null) {
+                    return ts.toLocalDateTime();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     private final String apiUrl;
     private final String apiToken;
@@ -44,18 +68,24 @@ public class ReservationFrontController {
         // Gestion du token manquant
         if (apiToken == null || apiToken.isBlank()) {
             model.addAttribute("errorMessage", "Accès refusé : token manquant.");
+            model.addAttribute("showTable", false);
+            return "reservations";
+        }
+
+        // Vérification expiration du token
+        LocalDateTime expiration = getTokenExpirationFromDb(apiToken);
+        if (expiration == null || expiration.isBefore(LocalDateTime.now())) {
+            model.addAttribute("errorMessage", "Token expiré");
             model.addAttribute("reservations", Collections.emptyList());
+            model.addAttribute("showTable", true);
             return "reservations";
         }
 
         FetchResult result = fetchReservationsWithStatus();
-        if (result.status == FetchStatus.TOKEN_EXPIRED) {
-            model.addAttribute("errorMessage", "Token expiré : veuillez renouveler votre accès.");
-            model.addAttribute("reservations", Collections.emptyList());
-            return "reservations";
-        } else if (result.status == FetchStatus.ACCESS_DENIED) {
+        if (result.status == FetchStatus.ACCESS_DENIED) {
             model.addAttribute("errorMessage", "Accès refusé : token invalide.");
             model.addAttribute("reservations", Collections.emptyList());
+            model.addAttribute("showTable", true);
             return "reservations";
         }
 
@@ -75,6 +105,8 @@ public class ReservationFrontController {
         }
 
         model.addAttribute("reservations", reservations);
+        model.addAttribute("showTable", true);
+        model.addAttribute("token", apiToken);
         return "reservations";
     }
 
