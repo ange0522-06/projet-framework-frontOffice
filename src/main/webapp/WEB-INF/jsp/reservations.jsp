@@ -228,7 +228,7 @@
         <% } %>
         </tbody>
     </table>
-<% } %>
+<!-- <% } %>
     <div class="container">
         <h1>Liste des réservations</h1>
 
@@ -271,6 +271,6 @@
             <% } %>
             </tbody>
         </table>
-    </div>
+    </div>-->
 </body>
-</html>
+</html> 
