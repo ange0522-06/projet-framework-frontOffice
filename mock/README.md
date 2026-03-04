@@ -13,4 +13,4 @@ the `external.api.reservations.url` in `src/main/resources/application.propertie
 
 3) Then run your Spring Boot app and open:
 
-http://localhost:8080/front/reservations
+http://localhost:9090/front/reservations
