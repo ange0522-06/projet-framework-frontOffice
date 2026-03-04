@@ -1,4 +1,4 @@
-com\teamLead\reservationVoiture\GreetingController.class
 com\teamLead\reservationVoiture\ReservationVoitureApplication.class
 com\teamLead\reservationVoiture\controller\ReservationFrontController.class
 com\teamLead\reservationVoiture\dto\ReservationDto.class
+com\teamLead\reservationVoiture\GreetingController.class
