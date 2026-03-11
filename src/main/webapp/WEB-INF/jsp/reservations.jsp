@@ -202,10 +202,9 @@
     <table>
         <thead>
         <tr>
-            <th>ID</th>
             <th>Client</th>
             <th>Hôtel</th>
-            <th>Date d'arrivée</th>
+            <th>Date de réservation</th>
         </tr>
         </thead>
         <tbody>
@@ -215,7 +214,6 @@
                 for (ReservationDto r : list) {
         %>
         <tr>
-            <td><%= r.getId() %></td>
             <td><%= r.getCustomerName() %></td>
             <td><%= r.getHotelName() %></td>
             <td><%= r.getArrivalDate() %></td>

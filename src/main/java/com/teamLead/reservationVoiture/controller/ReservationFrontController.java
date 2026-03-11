@@ -51,7 +51,7 @@ public class ReservationFrontController {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public ReservationFrontController(
-            @Value("${external.api.reservations.url:http://localhost:9090/reservation/api/reservation/list}") String apiUrl,
+            @Value("${external.api.reservations.url:http://localhost:8080/reservation/api/reservation/list}") String apiUrl,
             @Value("${external.api.reservations.token:}") String apiToken
     ) {
         this.apiUrl = apiUrl;
